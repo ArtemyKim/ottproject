@@ -13,6 +13,10 @@
 <title>메인 페이지</title>
 </head>
 <body>
+	<div>
+		<button id="loginBtn">로그인</button>
+		<div>반갑습니다. ${sessionScope.loginUser}</div>
+	</div>
 
 
 <div align="center"> 
@@ -34,6 +38,10 @@ $('img').on('click', function(){
     let ottId = $(this).attr('ottid');
     location.href = "ottpage.do?ottId=" + ottId;  
 });
+
+$('#loginBtn').click(function(){
+	location.href = 'login.do';
+})
 
 
 </script>
