@@ -94,8 +94,12 @@
 		<!-- 댓글 목록 --> 
 		<c:forEach var="comment" items="${ottCommentList}"> 
 		<div class="comment"> 
-			<div> <span class="comment-user"> ${comment.userName} </span> 
-			<span class="comment-time"> ${comment.commentTime} </span> 
+			<div>
+				<span class="comment-user"> ${comment.userName} </span> 
+				<span class="comment-time"> ${comment.commentTime} </span> 
+				<c:if test="${sessionScope.loginUser eq comment.userName}">
+	            <button type="button" class="btn-delete" data-id="${comment.commentId}">삭제</button>
+	        	</c:if>
 			</div> 
 			<div class="comment-content"> ${comment.userComment} 
 			</div> 
@@ -110,81 +114,73 @@
 
 //댓글 등록 버튼(#commentButton)을 클릭했을 때 실행
 $("#commentButton").click(function() {
+    const userName = "${sessionScope.loginUser}";
 
- // 테스트용 이름. 실제로는 로그인 기능을 통해 받아올 것
- const userName = "UserName";
+    if (!userName || userName.trim() === "") {
+        alert("댓글을 작성하려면 먼저 로그인해주세요.");
+        location.href = "login.do";
+        return;
+    }
 
+    const userComment = $("#commentInput").val();
+    const ottId = ${ottContent.ottId};
 
- // 댓글 입력창(#commentInput)에 사용자가 입력한 값을 가져옴
- // .val()은 input의 현재 입력값을 가져오는 jQuery 함수
- const userComment = $("#commentInput").val();
+    if (userComment.trim() === "") {
+        alert("댓글을 입력해주세요.");
+        return;
+    }
 
-
- const ottId = ${ottContent.ottId};
-
-
- // 댓글 내용이 비어 있는지 확인
- // trim()은 앞뒤의 공백을 제거한 문자열을 반환
- if (userComment.trim() === "") {
-
-     // 댓글이 비어 있다면 경고창 출력
-     alert("댓글을 입력해주세요.");
-
-     // 이후 AJAX 요청을 실행하지 않고 함수 종료
-     return;
- }
-
-
- // jQuery의 AJAX 기능을 이용해 서버에 데이터 전송
- $.ajax({
-
-     // 요청을 보낼 Servlet의 URL
-     // @WebServlet("/OTTCommentController")와 연결됨
-     url: "OTTCommentController",
-
-     // POST 방식으로 데이터를 전송
-     type: "POST",
-
-     // Servlet에 전달할 데이터
-     data: {
-
-         userName: userName,
-         userComment: userComment,
-         ottId: ottId
-     },
-
-
-     // Servlet에서 정상적으로 응답했을 때 실행
-     success: function(response) {
-
-         // Servlet이 "success"라는 문자열을 반환했는지 확인
-         if (response === "success") {
-
-             // 댓글 등록 성공 메시지
-             alert("댓글이 등록되었습니다.");
-
-             // 댓글 등록이 완료되었으므로 입력창을 비움
-             $("#commentInput").val("");
-
-         } else {
-
-             // Servlet에서 "fail"을 반환한 경우
-             alert("댓글 등록에 실패했습니다.");
-
-         }
-     },
-
-
-     // 서버 통신 자체에 문제가 발생했을 때 실행
-     error: function() {
-
-         alert("서버 통신 중 오류가 발생했습니다.");
-
-     }
-
- });
-
+    $.ajax({
+        url: "OTTCommentController",
+        type: "POST",
+        data: {
+            action: "insert",
+            userName: userName,
+            userComment: userComment,
+            ottId: ottId
+        },
+        // 구조가 아래로 써서 잘 안보이지만 콜백함수에용
+        success: function(response) {
+            if (response === "success") {
+                alert("댓글이 등록되었습니다.");
+                location.reload(); // 등록 후 새로고침
+            } else {
+                alert("댓글 등록에 실패했습니다.");
+            }
+        },
+        error: function() {
+            alert("서버 통신 중 오류가 발생했습니다.");
+        }
+    });
 });
+
+// 댓글 삭제 (onclick 없이 jQuery로 구현)
+$(document).on("click", ".btn-delete", function() {
+    const commentId = $(this).data("id");
+
+    if (!confirm("댓글을 삭제하시겠습니까?")) return;
+
+    $.ajax({
+        url: "OTTCommentController",
+        type: "POST",
+        data: {
+            action: "delete",
+            commentId: commentId
+        },
+        success: function(response) {
+            if (response === "success") {
+                alert("댓글이 삭제되었습니다.");
+                location.reload(); // 삭제 후 즉시 새로고침되어 목록에서 사라짐
+            } else {
+                alert("댓글 삭제에 실패했습니다.");
+            }
+        },
+        error: function() {
+            alert("서버 통신 중 오류가 발생했습니다.");
+        }
+    });
+});
+</script>
 
 </script>
 
