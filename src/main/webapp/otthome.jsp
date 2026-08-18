@@ -4,7 +4,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<link rel="stylesheet" href="addrbook.css" type="text/css" media="screen" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">

@@ -70,11 +70,11 @@
 
 
     <!-- OTT 이미지 -->
-    <img
-        class="ott-image"
-        src="${ottContent.ottImageAddress}"
-        alt="${ottContent.ottTitle}"
-    >
+	<img
+	    class="ott-image"
+	    src="${pageContext.request.contextPath}/images/${ottContent.ottImageAddress}"
+	    alt="${ottContent.ottTitle}"
+	>
 
 
     <!-- OTT 설명 -->

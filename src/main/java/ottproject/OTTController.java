@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @WebServlet("*.do")
-public class OTTPageController extends HttpServlet {
+public class OTTController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String page = "otthome.jsp";
 		String uri = req.getRequestURI(); //http://localhost:8080/empapp/list.do
@@ -31,10 +31,21 @@ public class OTTPageController extends HttpServlet {
 			    
 			    List<OTTComment> ottCommentList = OTTCommentDAO.selectCommentsByOttId(ottid);
 			    OTTContent content = OTTContentDAO.selectContentById(ottid);
+			    
+			    System.out.println(content.ottTitle);
 			  
+			    //테스트용
+			    /*
+			    OTTContent content = new OTTContent();
+			    content.ottTitle = "제목";
+			    content.ottDescription = "줄거리 설명";
+			    content.ottImageAddress = "images/redCircle.png";
+			    */
+			    
 			    req.setAttribute("curId", ottid); 
 			    req.setAttribute("ottContent", content); // 내장객체 request에 "ottContent" 라는 이름으로 ott객체를 저장함
 			    req.setAttribute("ottCommentList", ottCommentList); // 내장객체 request에 "ottContent" 라는 이름으로 ott객체를 저장함
+			    
 			    
 			    page = "ottpage.jsp";
 			    break;
