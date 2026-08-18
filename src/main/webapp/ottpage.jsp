@@ -112,8 +112,13 @@
 $("#commentButton").click(function() {
 
  // 테스트용 이름. 실제로는 로그인 기능을 통해 받아올 것
- const userName = "UserName";
+ const userName = "${sessionScope.loginUser}";
 
+ if (!userName || userName.trim() === "") {
+	    alert("댓글을 작성하려면 먼저 로그인해주세요.");
+	    location.href = "login.do";
+	    return;
+}
 
  // 댓글 입력창(#commentInput)에 사용자가 입력한 값을 가져옴
  // .val()은 input의 현재 입력값을 가져오는 jQuery 함수
