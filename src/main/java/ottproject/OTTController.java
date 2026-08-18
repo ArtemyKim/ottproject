@@ -46,7 +46,6 @@ public class OTTController extends HttpServlet {
 				String userId = req.getParameter("userId");
 				String userPassword = req.getParameter("userPassword");
 				
-				
 				if (userId == null || userId.trim().isEmpty()) {
 					page = "login.jsp";
 				} else {
@@ -55,6 +54,14 @@ public class OTTController extends HttpServlet {
 					
 					page = "otthome.jsp";
 				}
+				break;
+			}
+			case "/logout.do" : {
+				HttpSession session = req.getSession(false);
+				if (session != null) {
+			        session.invalidate(); // 세션 완전 제거
+			    }
+				page = "otthome.jsp";
 				break;
 			}
 			default :

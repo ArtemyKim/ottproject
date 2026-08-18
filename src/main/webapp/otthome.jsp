@@ -16,12 +16,12 @@
 	<div>
 		<button id="loginBtn">로그인</button>
 		<div>반갑습니다. ${sessionScope.loginUser}</div>
+		<button id="logoutBtn">로그아웃</button>
 	</div>
 
 
 <div align="center"> 
 <H2>애니메이션 목록 출력</H2>
-<HR>
 <form>
 
 	<img src ="images/prr.png" width = "10%" ottid = "1">
@@ -42,6 +42,10 @@ $('img').on('click', function(){
 $('#loginBtn').click(function(){
 	location.href = 'login.do';
 })
+
+$('#logoutBtn').click(function(){
+	location.href = 'logout.do';
+});
 
 
 </script>
