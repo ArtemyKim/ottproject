@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet("*.do")
@@ -33,24 +34,29 @@ public class OTTController extends HttpServlet {
 			    OTTContent content = OTTContentDAO.selectContentById(ottid);
 			    
 			    System.out.println(content.ottTitle);
-			  
-			    //테스트용
-			    /*
-			    OTTContent content = new OTTContent();
-			    content.ottTitle = "제목";
-			    content.ottDescription = "줄거리 설명";
-			    content.ottImageAddress = "images/redCircle.png";
-			    */
 			    
 			    req.setAttribute("curId", ottid); 
 			    req.setAttribute("ottContent", content); // 내장객체 request에 "ottContent" 라는 이름으로 ott객체를 저장함
 			    req.setAttribute("ottCommentList", ottCommentList); // 내장객체 request에 "ottContent" 라는 이름으로 ott객체를 저장함
 			    
-			    
 			    page = "ottpage.jsp";
 			    break;
 			}
-			
+			case "/login.do" : {
+				String userId = req.getParameter("userId");
+				String userPassword = req.getParameter("userPassword");
+				
+				
+				if (userId == null || userId.trim().isEmpty()) {
+					page = "login.jsp";
+				} else {
+					HttpSession session = req.getSession();
+					session.setAttribute("loginUser", userId);
+					
+					page = "otthome.jsp";
+				}
+				break;
+			}
 			default :
 		}
 		RequestDispatcher rd = req.getRequestDispatcher(page);
