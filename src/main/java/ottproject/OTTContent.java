@@ -8,6 +8,7 @@ public class OTTContent {
 		String ottImageAddress;//이미지주소
 		String ottDescription;//줄거리
 		String ottTag;//장르
+		String YouTubeId;//유튜브주소
 		
 		public int getOttId() {
 			return ottId;
@@ -44,6 +45,12 @@ public class OTTContent {
 		}
 		public void setOttTag(String ottTag) {
 			this.ottTag = ottTag;
+		}
+		public String getYouTubeId() {
+			return YouTubeId;
+		}
+		public void setYouTubeId(String YouTubeId) {
+			this.YouTubeId = YouTubeId;
 		}
 		
 		

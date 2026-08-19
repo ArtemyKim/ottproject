@@ -8,7 +8,7 @@ public class OTTContentDAO {
 
     public static OTTContent selectContentById(int ottId) {
         OTTContent content = new OTTContent();
-        String sql = "select ott_id, ott_Title, ott_day, ott_imageAddress, ott_description, ott_tag from ott_content where ott_id = ?";
+        String sql = "select ott_id, ott_Title, ott_day, ott_imageAddress, ott_description, ott_tag, youtube_id from ott_content where ott_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement psmt = conn.prepareStatement(sql)) {
@@ -23,6 +23,7 @@ public class OTTContentDAO {
                     content.setOttDay(rs.getString("ott_day"));
                     content.setOttImageAddress(rs.getString("ott_imageAddress"));
                     content.setOttDescription(rs.getString("ott_description"));
+                    content.setYouTubeId(rs.getString("youtube_id"));
                     content.setOttTag(rs.getString("ott_tag"));
                     System.out.println("쿼리문 완료"); //디버깅용
                 }

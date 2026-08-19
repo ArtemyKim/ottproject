@@ -13,55 +13,12 @@
 		crossorigin="anonymous">
 	</script>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/ottstyle.css">
 <title>Insert title here</title>
-    <style>
-        .content-container {
-            width: 700px;
-            margin: 50px auto;
-        }
-
-        .ott-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .description {
-            margin-top: 30px;
-            padding: 20px;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        .comment-container {
-            margin-top: 30px;
-        }
-
-        .comment {
-            padding: 15px 0;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .comment-user {
-            font-weight: bold;
-        }
-
-        .comment-time {
-            margin-left: 10px;
-            color: gray;
-            font-size: 13px;
-        }
-
-        .comment-content {
-            margin-top: 8px;
-        }
-    </style>
+   
 </head>
 
 <body>
-	<h1>출력 페이지</h1>
-	<h1>${curId}</h1>
 	
 <div class="content-container">
 
@@ -69,15 +26,17 @@
     <h1>${ottContent.ottTitle}</h1>
 
 
-    <!-- OTT 이미지 -->
-	<img
-	    class="ott-image"
-	    src="${pageContext.request.contextPath}/images/${ottContent.ottImageAddress}"
-	    alt="${ottContent.ottTitle}"
-	>
+		<div class="video-container">
+			<!-- 유튜브 ID를 iframe src에 동적으로 삽입 -->
+			<iframe
+				src="https://www.youtube.com/embed/${ottContent.youTubeId}?autoplay=1&mute=1"
+				title="${ottContent.ottTitle} 예고편" frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen> </iframe>
+		</div>
 
 
-    <!-- OTT 설명 -->
+		<!-- OTT 설명 -->
     <div class="description">
         ${ottContent.ottDescription}
     </div>
@@ -154,7 +113,7 @@ $("#commentButton").click(function() {
     });
 });
 
-// 댓글 삭제 (onclick 없이 jQuery로 구현)
+// 댓글 삭제 (jQuery로 구현)
 $(document).on("click", ".btn-delete", function() {
     const commentId = $(this).data("id");
 

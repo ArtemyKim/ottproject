@@ -11,7 +11,7 @@ public class DBUtil {
 			BasicDataSource ds = new BasicDataSource();
 			ds.setUrl("jdbc:mysql://localhost:3306/newhr");
 			ds.setUsername("root");
-			ds.setPassword("rootrootr5d");
+			ds.setPassword("rootroot");
 			ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			ds.setInitialSize(5);
 			ds.setMaxTotal(20);

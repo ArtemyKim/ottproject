@@ -34,6 +34,7 @@ public class OTTController extends HttpServlet {
 			    OTTContent content = OTTContentDAO.selectContentById(ottid);
 			    
 			    System.out.println(content.ottTitle);
+			    System.out.println(content.YouTubeId);
 			    
 			    req.setAttribute("curId", ottid); 
 			    req.setAttribute("ottContent", content); // 내장객체 request에 "ottContent" 라는 이름으로 ott객체를 저장함
